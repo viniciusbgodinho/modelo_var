@@ -1,0 +1,504 @@
+\documentclass[a4paper,12pt,oneside,titlepage]{article}
+\usepackage[brazilian,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx,color}
+\usepackage{makeidx}
+\usepackage{float}
+\makeindex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{indentfirst}
+
+% pacotes para incrementar recursos matematicos
+% amsmath -> recursos avancados de matematica
+% amssymb -> symbolos e fontes adicionais (ele inclui amsfonts)
+% amsthm -> teorema de demonstracao
+\usepackage{amsmath,amssymb} 
+\usepackage{amsthm} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% para configurar a lista enumerada
+\usepackage{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tabela longa que quebra entre p\'aginas
+\usepackage{longtable}
+
+% linhas duplas na tabela
+\usepackage{hhline}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Para incluir imagens externas no LaTeX
+% caixa gr\'afica
+\usepackage{graphicx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pacotes graficos para figuras
+% usando comandos de LaTeX
+
+% Ative o pict2e, se for usar ambiente picture
+%  \usepackage{pict2e}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Caso queira indentar a primeira linha do capitulo/secao, ative-o
+% \usepackage{indentfirst}
+
+%%%%%%%%%%%%%%%%%%%%
+% indice remissivo
+\usepackage{makeidx}
+\makeindex % ativar (necess\'ario)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% para acertar margens
+% No caso de PCTeX 4.0 ou anterior, os arquivos 
+% geometry.sty e geometry.cfg devem ficar junto com 
+% o arquivo tex em edicao por n\~ao fazer parte da instala\c{c}\~ao.
+
+\usepackage{geometry}
+% Acerto de margens:
+% lmargin -> left (esquerda). Interna, se frente/verso
+% rmargin -> right (direita). Externa, se frente/verso
+% tmargin -> top (superior).
+% bmargin -> bot (inferior).
+\geometry{lmargin=3.0cm,rmargin=2.0cm,tmargin=2.5cm,bmargin=2.0cm}
+
+
+\usepackage{cite}
+
+
+\begin{document}
+
+
+\selectlanguage{brazilian}
+\begin{center}
+\textbf{\LARGE{Comportamento dos Preços dos Grãos no Brasil e seus Principais Determinantes: Análise Utilizando Vetores Autoregressivos (VAR)}}	
+\end{center}	
+
+\vspace{3pt}
+
+\begin{center}
+\ Vinícius Barbosa Godinho
+
+\vspace{3pt}
+
+Janeiro de 2007 - João Pessoa
+\end{center}
+\vspace{6pt}
+\begin{center}
+	
+\textbf{Resumo}
+\end{center}
+\vspace{6pt}
+\noindent O intuito desse trabalho é analisar o comportamento do preços dos grãos no Brasil, a partir de um modelo autoregressivo (VAR) padrão, analisando as interações entre as principais variáveis macroeconômicas que afetam a agricultura,tais como: taxa de juros real, taxa de câmbio real, preço real da energia e taxa de inflação. Assim, é realizado testes de raiz unitária, testes de de cointegração e causalidade e função de impulso resposta.   
+
+
+\vspace{12 pt} 
+
+	\noindent
+\textbf{Palavras-chave:} preço real dos grãos.causalidade e cointegração. VAR padrão
+
+
+\selectlanguage{english}
+
+\vspace{6pt}
+\begin{center}
+\textbf{\textit{Abstract}}	
+\end{center}
+
+\selectlanguage{english}
+
+\vspace{6pt}	
+	\noindent 	\textit{The purpose of this paper is to analyze the behavior of grain prices in Brazil, based on a standard autoregressive model (VAR), analyzing the interactions between the main macroeconomic variables that have an imoact agriculture, such as: real interest rate, exchange rate, real energy price and inflation rate. Thus, unit root tests, cointegration tests, causality tests and impulse response functions have been performed.}
+	
+	
+	\vspace{12 pt} 
+	
+\noindent
+	\textbf{\textit{Keyword:}} \textit{real grain prices. causality and cointegration. standard VAR}
+
+\selectlanguage{brazilian}
+
+\section{Introdução}
+
+\ Como podemos observar na figura (\ref{ccc}), o preço das \textit{commodities}\footnote{Índice de Preço Geral da Commodities retirada do FED} globais têm aumentado ao longo dos anos. A partir dos anos 2000 podemos observar o que foi denominado \textit{boom} das commodities, com acentuada alta a partir da segunda metade da primeira década do século XXI, com registros de declínio em setembro de 2008, impactado pela crise. O preço se recupera final de 2009, alcançando
+picos históricos em meados de 2012 e mantendo a alta até agosto de 2015. A partir disso, os preços têm leves oscilações de queda. Apesar da instabilidade,
+observam-se, nos últimos anos, aumentos reais dos preços da
+maioria das commodities agrícolas.
+
+\ Essa instabilidade é explicado por inúmeros fatores, podendo ser estes fatores de que impactam a oferta e demanda. Do lado da
+demanda, notam-se altas motivada pelo aumento do poder de consumo nos países em desenvolvimento, principalmente na China e na Índia, e aumento da demanda por atividades agrícolas.
+Do lado da oferta, há redução das quantidades produzidas
+ocasionadas por fatores climáticos (FAO, 2012), além da baixa
+nos estoques mundiais (FAO, 2012; MAPA, 2011). Os preços
+aumentam também forçados pelo aumento nos custos de
+produção, advindos da elevação nos preços dos insumos
+utilizados ao longo das cadeias agroindustriais, a exemplo
+do petróleo e outras fontes de energia (Margarido et al., 2011).
+
+\ Nesse contexto, muitos pesquisadores tomaram os preços agrícolas como escopo de estudo, com diversos modelos que tentam captar o comportamento e as variáveis de influência desses preços. Os preços das \textit{commodities} agrícolas são altamente influenciados pelas variáveis de mercado e, afetam de maneira decisiva a renda
+e a balança comercial do agronegócio, o qual tem expressiva
+participação no PIB brasileiro. Em 2015, por exemplo, o agronegócio
+foi responsável por 22,75 \textit{por cento} do PIB nacional\footnote{Ministério da Agricultura}. 
+
+\ Dessa forma, o objetivo desse estudo, a partir de um vetor autoregressivo padrão (VAR), é o de analisar as relações do comportamento do preço dos grãos no Brasil com as principais variáveis macroeconômicas que afetam a agricultura. Para tanto, além dessa introdução, esse artigo foi dividido em cinco seções. A segunda é reservada para uma breve revisão dos trabalhos aplicados no tema, visto a \textit{gamma} de trabalhos relacionados. Sendo alguns modelos, base para a escolha do modelo analisado. A terceira seção é destinado a metodologia, onde será apresentado quais dados e os ajustes necessários para adequar ao modelo que foram utilizados. A seção quatro é destinada a realizar os testes econométricos, testes de raiz unitária, testes de cointegração e de causalidade, função de impulso resposta para avaliar e mensurar os choques das variáveis explicativas. E por fim, as considerações finais que será destinada a análise dos principais resultados do modelos, apontando as falhas encontradas, bem como ideias de modelos mais sofisticados para captar melhor as relações desejadas.      
+
+\section{Revisão da Literatura}
+
+\ A maior volatilidade e a elevação nos preços dos alimentos
+é fenômeno observado nos últimos anos. Observando o preço das \textit{commodities} globais na figura \eqref{ccc} pode-se perceber que período de 1990 a 2003 apresenta variações suaves entre anos sucessivos, sem oscilações expressivas. A
+partir de 2004 observa-se um aumento acentuado, aumentando a volatilidade do índice de preços. Isso pode ser constatado observando a tabela (\ref{dp1}). O desvio padrão do janeiro de 1990 até dezembro de 2003 é de $6.93$, sendo o de janeiro de 2004 até novembro de 20016 $18.60$.
+\begin{table}[H]
+	\caption{Desvio Padrão}
+	\label{dp1}
+	\begin{center}
+		\begin{tabular}{ll}
+			\hline
+		Período	& Desvio Padrão   \\ 
+			\hline
+			1990:01-2003:12 &   6.936794  \\ 
+			2004:01-2016:11& 18.60467     \\ 
+			1990:01-2016:11& 31.85618   \\ 
+		 		
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}          
+
+\ Chand (2008) analisa o preço do petróleo e as principais \textit{commodities} agrícolas, ele destaca que grande parte dos aumentos nos preços globais dos alimentos estão relacionados com a elevação do preço do petróleo a partir de 2004.Por sua vez,  Hamilton (2009), destaca que o aumento acentuado dos desvios do preço da energia, em grande maioria o preço do petróleo, se deve , em grande parte, devido ao crescimento dos países em desenvolvimento. 
+
+\ Enders e Holt (2012) destaca que, em geral, as condições macroeconômicas tem um impacto no comportamento do preços das \textit{commodities} nos anos recentes. Os autores citam que Frankel (2007) relacionam a política monetária com a taxa de juros real, a taxa de câmbio real e os preços das agriculturas e o preço dos minerais. Onde um declínio real no preço do dólar tornam os grãos relativamente menos onerosos para os estrangeiros, assim relacionando as baixas taxas de juros e um dólar fraco com o \textit{boom} do preço das \textit{commodities}. Enders e Holt (2012) comentam sobre o modelo fatorial desenvolvido por Chen et al. (2010), aplicam para 51 \textit{commodities} comercializáveis, é mostrado que os movimentos da taxa de câmbio real fornecem previsões melhorada para um modelo de passeio aleatório. Fatores macroeconômicos, muitas vezes exacerbados,, combinado com uma política monetária frouxa nos Estados Unidos e em outros países durante a década de 2000, provavelmente desempenhou um papel significativo no recente \textit{boom} dos preços das commodities.    
+
+\label{lit}
+
+\begin{figure}[H]
+	\caption{Índice de Preços das Commodities }
+	\includegraphics[scale=1]{Rplotc.png}
+	\label{ccc}
+\end{figure}
+
+
+\section{Metodologia}
+\label{metod}
+
+\subsection{Descrição dos dados}
+
+\ Para a análise dos do VAR padrão, o intuito principal é o de mensurar os efeitos entre a relação dos preços dos grãos, entre as principais variáveis macroeconômicas. Para tanto as variáveis a seguir foram escolhidas para serem inseridas no modelo: a taxa de juros e a taxa de inflação. 
+\begin{itemize}
+	\item{Preço dos grãos: para medir o preço dos grãos foi criado um índice de preço a partir do preço médio recebido pelo produtor dos seguintes grãos: café em coco (Kg), cana-de-açúcar (tonelada), milho (60 kg) e soja (60 Kg)\footnote{Fundação Getúlio Vargas}, (base=100 na média dos meses de 2010). Esses grãos foram escolhidos por apresentarem o maior peso no valor bruto da produção das lavouras\footnote{Ministério da Agricultura http://www.agricultura.gov.br}. Os preços dos grãos foram deflacionados pelo IPCA\footnote{IBGE} mensal, tomando como análise os preços reais. Esse índice foi criado como uma \textit{proxy} para o índice recebido pelo produtor rural médio(IPR) calculado pela Companhia Nacional de Abastecimento (Conab), pois a base de dados disponível por esta, se encontrava em manutenção na realização deste estudo. Assim, comparando o índice criado com os dados do IPR, disponíveis no site do Ministério da Agricultura para o período entre 1995 a 2005, possuíram trajetórias semelhantes e forte correlação, desse modo, o índice criado pode ser uma boa \textit{proxy} para mensurar os preços dos grãos no Brasil.\footnote{ Além disso a integração dos preços agrícolas podem ser verificadas nos seguintes trabalhos empíricos: Libera (2009), Caldarelli e Bacchi
+			(2012), Block et. al. (2012), Zhang et al. (2009) e Saghaian (2010) que mostra que a correlação dos preços agrícolas estão cada vez mais correlacionados};} 
+\item{Preço da energia: para captar o preço da energia foi utilizado o preço bruto do petróleo em dólar\footnote{FED https://fred.stlouisfed.org/series/POILWTIUSDM}, esse foi transformado para real pela taxa de câmbio comercial de compra média\footnote{Banco Central do Brasil, Boletim, Seção Balanço de Pagamentos (Bacen / Boletim / BP)} e deflacionado para o IPCA transformando em preço real. A elevação nos preços do petróleo aumenta acresce os
+	custos de produção por ser um importante insumo no processo
+	produtivo. Os efeitos vão desde o aumento do custo
+	do transporte a majoração nos preços de insumos agrícolas
+	que utilizam o petróleo e seus derivados na sua constituição;}
+
+\item{Taxa de juros: selic mensal\footnote{ Banco Central} deflacionada pelo IPCA;}  
+
+\item{Taxa de Câmbio:calculada através do índice de preços real do câmbio\footnote{Fonte: Banco BIS}, (base=100 na média dos meses de 2010);}   
+
+\item{Taxa de inflação: é a vaiaração do IPCA mensal.}
+
+\end{itemize}
+\ Para análise inicial das séries temporais foram utilizado os dados entre janeiro de 1995 a novembro de 2016 figura(\ref{brutos}). O preço dos grãos têm uma tendência de subida em todo período. Entre 1995 e 2000 os preços dos grãos sobem, de certa forma, constantes. A partir dos anos 2000 pode-se observar forte ascensão dos preços, no início de 2010 apresenta uma queda, mas se recupera rápido. Pode-se perceber o comportamento análogo ao preço das \textit{commodities} na figura \ref{ccc}. Assim como o preço de energia, a série de tempo dos preços dos grãos estão relacionadas com os fatores apontados na seção (\ref{lit}).    
+
+\ 
+
+\begin{figure}[H]
+	\caption{Dados brutos}
+	\includegraphics[scale=0.5]{Rplot06.png}
+	\includegraphics[scale=0.5]{Rplot07.png}
+	\includegraphics[scale=0.5]{Rplot08.png}
+	\includegraphics[scale=0.5]{Rplot09.png}
+	\includegraphics[scale=0.5]{Rplot10.png}
+	\label{brutos}
+\end{figure} 
+\ Séries temporais possuem certas características, as principais são a volatilidade, correlação contemporânea. Assim, faz-se necessário um tratamento dos dados antes da análise. O motivo de separar a tendência de nossa variável, neste contexto, é de separar tendências de crescimento de longo prazo e variação sazonais de fenômenos exclusivamente cíclicos, ou aleatórios. 
+O componente sazonal, ou seja, a presença de um ciclo durante
+certo período pode causar instabilidade para a série, Enders(2014), destaca que utilizar uma série temporal ignorando o componente sazonal pode gerar uma variância alta na regressão. A priori, uma análise gráfica não é possível verificar a presença de sazonalidade na série, porém vamos utilizar outras ferramentas para constatar a ausência de sazonalidade. Segundo Gujarati(2003), um método de verificação do componente sazonal determinístico é inserir uma matriz de variáveis \textit{dummies} mensais auxiliar de cada período de tempo regredido no modelo. Nenhuma das cincos séries apresentou componente sazonal. Para retirar tendência foi tomado a primeira diferença do preço dos grãos e do preço da energia. Pelas séries apresentarem fortes quebras estruturais que o VAR padrão não consegue captar, será utilizado no modelo os dados a partir do ano 2000 como apresentado na figura (\ref{tratados}).
+
+\begin{figure}[H]
+	\caption{Dados Utilizados no Modelo}
+	\includegraphics[scale=0.5]{Rplot01.png}
+	\includegraphics[scale=0.5]{Rplot02.png}
+\includegraphics[scale=0.5]{Rplot03.png}
+\includegraphics[scale=0.5]{Rplot04.png}
+\includegraphics[scale=0.5]{Rplot05.png}
+	\label{tratados}
+\end{figure}  
+
+
+
+
+         
+
+
+\section{Análise do VAR}
+\label{result}
+
+\ O modelo utilizado segue o modelo de Enders e Holt(2012), um modelo autoregressivo padrão (VAR) para analisar a dinâmica das interações entre o preço real dos grãos e identificar as principais variáveis macroeconômicas que afetam o setor agrícola. Para Enders e Holt (2012) um dos benefício de utilizar uma análise através do VAR é poder mensurar até que ponto os desvios das variáveis macroeconômicas são transmitidas para o preço real dos grãos sem precisar impor nenhum pressuposto estrutural particular para a série. A princípio as variáveis macroeconômicas utilizadas foram o preço da energia, a taxa de juros, a taxa de câmbio, todos em termos reais, para os EUA no período de 1975 a 2010 . Foi utilizado essas variáveis adaptando para o caso Brasileiro, porém após a regressão do VAR foi identificado uma distribuição heterocedástica nos termos de erro, assim foi introduzido a taxa de inflação no intuito de corrigir esse problema de má especificação do modelo.    
+
+\subsection{Teste de Raiz Unitária}
+
+\ Antes de estimar o vetor autoregressivo é necessário verificar se as séries são estacionárias, ou seja, possuem ou não raiz unitária. Assim, choques aleatórios em séries que apresentam raiz unitária geram efeitos permanentes nestas. Existem vários testes para se testar se a variável é estacionária, um muito usual é o teste Dickey-Fuller Ampliado (ADF). Segundo Enders (2014) o teste é especificado pela equação (\eqref{adfe}). 
+\begin{equation}
+\label{adfe}
+\Delta Y_t = \beta_{1t} + \delta Y_{t-1} + \sum c_t \Delta Y_{t-1} +\mu_t 
+\end{equation}
+
+\begin{equation}
+\label{bc}
+
+SBC_E = ST - ET
+\end{equation}
+\ ET = E_OE + M_RM
+\ ST = V_OE + X_RM
+onde a hipótese nula é de que a série possui raiz unitária, ou seja, não estacionária e a hipótese alternativa a série é estacionária.
+
+\ Foi realizado o teste com tendência e com constância, e como mostra a tabela (\ref{adf}) foi rejeitado a hipótese nula para todas as variáveis. Assim, as séries são estacionárias e é possível estimar o VAR. 
+
+
+\begin{table}[H]
+	\caption{Teste de Raiz Unitária - ADF - (Defasagens selecionadas pelo critério AIC)}
+	\label{adf}
+	\begin{center}
+		\begin{tabular}{lll}
+			\hline
+			Variável & P- Valor (com Constante)  & P-valor com Tendência \\ 
+			\hline
+			Grãos &   2.2e-16  &    2.687e-16   \\ 
+			Juros & 1.032e-07   & 2.046e-08    \\ 
+			Câmbio & 2.2e-16  & 2.2e-16    \\ 
+			Energia & 2.2e-16  &  2.2e-16     \\ 
+			Inflação & 1.278e-07   &  2.422e-07    \\ 		
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}   
+
+\subsection{Especificando o VAR}
+
+\ Para a especificação do número de defasagens adotada para escolher o melhor modelo utiliza-se critérios de seleção apresentados na tabela (\ref{selectvar1}). Esses critérios  são aplicados na matriz de covariância dos resíduos,
+ou seja, ao sistema de equações como um todo e não aos resíduos de cada equação individual. Com base nos
+critérios de informação Hannan – Quinn (HQ) e de Schwarz (SC) o melhor modelo é com uma defasagem. No entanto, o critério de informação de Akaike (AIC) e o FPE(n) indica que o melhor modelo deve ter duas defasagens. Assim, levando em consideração o modelo mais parcimonioso serão considerados as
+defasagens sugeridas pelos critérios HQ e SC. Esses critérios são os mesmos utilizados para determinar as defasagens do teste de causalidade de Granger.
+
+\begin{table}[H]
+	\caption{Especificação do VAR}
+	\label{selectvar1}
+	\begin{center}
+		\begin{tabular}{lllll}
+			\hline
+			Defasagens & AIC(n)  & HQ(n) & SC(n) & FPE(n)\\ 
+			\hline
+			1 &   4.733843  & 4.970832 & 5.319220 &113.749062 \\ 
+			2 & 4.615198  &   5.021465    & 5.618702 &101.085301\\ 
+			3 & 4.684248  & 5.259792    & 6.105879 & 108.465536\\ 
+			4 &  4.756193  &  5.501015  & 6.595951 &116.856050\\ 
+			5 &  4.854120   &  5.768220 &  7.112005 & 129.403372\\ 
+			6 & 4.952292   &   6.035670 &   7.628304 & 143.600418\\
+			7 & 5.055836   &  6.308491 &   8.149974 & 160.573482\\		
+			\hline
+			Defasagem por critério & 2  &  1 & 1  & 2\\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table} 
+
+\subsection{Cointegração e Causalidade de Granger}
+
+\ A estacionariedade das séries estão relacionadas se as variáveis são cointegradas, esse conceito é fortemente ligado ao equilíbrio de longo prazo. Supondo duas variáveis $X_t$ e $Y_t$, essas são ditas cointegradas se existe pelo menos uma cominação linear entre elas, $\varepsilon_{Y_t} = Y_t - \beta X_t$, que gere uma variável estacionária, ou seja, I(0). 
+
+\ Entre as diversas formas de se testar a cointegração entre as variáveis, os testes mais consolidados foram desenvolvidos por 
+Granger (1987) e Johansen e Juselius (1990). O primeiro afirma que as variáveis em estudo serão cointegradas, se estas forem integradas de mesma ordem
+(sendo ) e se existir uma combinação linear dessas variáveis que seja estacionária.
+Essa técnica não é indicada para testar a cointegração, quando existe a possibilidade da
+existência de mais de um vetor. Nesse caso, a metodologia recomendada é a de
+Johansen e Juselius (1990). Em termos formais, esse método baseia-se na seguinte
+versão parametrizada de um modelo VAR (p):
+
+
+
+\subsubsection{Cointegração de Johansen e Juselius}
+
+\ Esse teste é baseado na versão parametrizada de um modelo VAR(p) apresentada na equação \eqref{jj}.
+
+\begin{equation}
+\label{jj}
+\Delta x_t + \pi_0 + \pi x_{t-1} + \pi_1 \Delta x_{t-1} + \pi_2 \Delta x_{t-2} + ... + \pi_p \Delta x_{t-p} + \varepsilon_t
+\end{equation} 
+em que corresponde $\pi_0$ a um vetor $(nx1$) dos termos de intercepto com elementos$\pi_{i0}$ ;$\pi_i$
+é a matriz de coeficientes $(nxn)$ com elementos $\pi_{jk}(i)$; $\pi$ é a matriz com elementos $\pi{jk}$
+tal que um ou mais de$\pi_{jk}\neq0$ e $\varepsilon$ é um vetor $(nx1)$ com elementos  $\varepsilon$. Observa-se
+que os termos de perturbação $\varepsilon$ são tais que deve ser correlacionado com $\varepsilon_{jt}$.
+
+
+\ De acordo com o teste Johansen e Juselius (1990), para identificar se as
+séries são cointegradas, devem-se aplicar os testes de traço $(\lambda_{trace})$ e de autovalor $(\lambda_{max})$
+máximo . Quando o valor calculado pelas estatísticas $(\lambda_{trace})$ e $(\lambda_{max})$
+são maiores que os valores críticos, rejeita-se a hipótese nula de não
+cointegração e, se aceita a hipótese alternativa de um ou mais vetores cointegrados. Como apresentado na tabela \ref{jjtable}, é rejeitado a hipótese nula, u seja, um ou mais vetores são cointegrados. 
+
+\begin{table}[H]
+	\caption{Teste de Johansen e Juselius}
+	\label{jjtable}
+	\begin{center}
+		\begin{tabular}{lllll}
+			\hline
+			$H_0$& T-calculado& $10pct$ & $5pct$ & $1pct$\\ 
+			\hline
+			$r\leq4$ & 7.54 & 7.52 & 9.24 &12.97 \\ 
+			$r\leq3$ & 23.78 &13.75 &15.67 &20.20\\ 
+		$r\leq2$ & 33.30 &19.77 &22.00 &26.81\\ 
+			$r\leq1$ & 48.47 &25.56 &28.14 &33.24\\ 
+			$r=0$ & 52.93 &31.66 &34.40 &39.79 \\ 
+		
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+          
+\subsubsection{Causalidade de Granger}
+
+\ De forma simples, se os valores passados de X nos ajudam a prever Y pode-se dizer que X Granger causa Y, ou seja, $X\longrightarrow Y$. De acordo com Enders (2014), a equação \eqref{egranger} descreve a relação entre X e Y. 
+
+\begin{equation}
+\label{egranger}
+Y_t = \sum \alpha_i X_{t-i} + \sum \beta_i Y_{t-i} + \varepsilon_{1t}
+\end{equation}
+
+Se $\sum \alpha_i \neq 0$, ou seja, se todos $\alpha_i$ são conjuntamente diferentes de zero, então temos que $X\longrightarrow Y$ . De forma análoga o contrário também pode valer, assim o teste de Granger testa a causalidade de $X$ em $Y$ e a causalidade de $Y$ em $X$.
+      
+\ O teste de causalidade, no sentido Granger, foi realizado com uma defasagem, de acordo com os critérios HQ e SC definidos na tabela \ref{selectvar1}. O símbolo $(*)$ na tabela \ref{granger} foi utilizado no sentido de identificar as relações que rejeitam a hipótese nula, sendo $(*)$ para 10 por cento e (***) para 1 por cento.  A hipótese nula é de que a variável não causa, no sentido de Granger, a segunda, ou seja, de que a segunda variável é 
+exógena em relação à primeira. Rejeitando a hipótese nula, se aceita a hipótese
+alternativa de que há causalidade no sentido Granger, ou seja, a segunda é endógena em
+relação à primeira. A partir da tabela \ref{granger}, podemos observar que exceto o teste de causalidade da taxa de juros no preço dos grãos e da taxa de inflação no preço dos grãos, todos os outros teste aceitaram o hipótese nula, ou seja, não tem efeito de causalidade. Apesar das limitações do teste de Granger o resultado vai de acordo com a teria econômica, onde o maior efeito de causalidade foi da taxa de inflação no preço dos grãos. Adotaremos esse teste para estabelecer a ordem de entrada do modelo VAR, nota-se que essa ordem de entrada é a critério do pesquisador, mas recomenda-se colocar das variáveis mais exógenas para as mais endógenas, a ordem adotada para analisar a função de impulso resposta será o preço da energia, a taxa de câmbio, a taxa de juros e por último a taxa de inflação. 
+
+ 
+\begin{table}[H]
+	\caption{Teste de Causalidade de Granger}
+	\label{granger}
+	\begin{center}
+		\begin{tabular}{lll}
+			\hline
+			Hipótese nula& Graus de Liberdade& P-valor\\ 
+			\hline
+			Grãos não causa, no sentido de Granger, Energia& 199& 0.4662\\
+			Energia não causa, no sentido de Granger, Grãos& 199& 0.7054\\
+			Grãos não causa, no sentido de Granger, Câmbio& 199& 0.1295\\
+			Câmbio não causa, no sentido de Granger, Grãos& 199& 0.2309\\
+			Grãos não causa, no sentido de Granger, Juros& 199& 0.7817\\
+			Juros não causa, no sentido de Granger, Grãos& 199& 0.09347*\\
+			Grãos não causa, no sentido de Granger, Inflação& 199& 0.4233\\
+			Inflação não causa, no sentido de Granger, Grãos& 199& 0.003171***\\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+ 
+
+
+  
+\subsection{Função de Impulso Resposta}
+ 
+\ Definido o melhor modelo vamos analisar as funções de resposta à impulso (FRI). Estas retratam a resposta de determinada variável a um impulso proveniente de outro, com
+todas as demais variáveis do modelo mantidas constantes. Desse modo, é possível observar o comportamento das variáveis do sistema em resposta aos vários choques realizados, estes estão representadas nos gráficos (\ref{fri}) e (\ref{fri2}).
+
+\ Pode-se observar dos resultados que choques provenientes do preço dos grãos e do preço da energia não provocam uma resposta clara em nenhuma variável. Choque provenientes da inflação tem uma leve queda nos dois primeiros meses no preço real dos grãos, depois converge, o que só poderia ser explicado, que como são preços reais e a transmissão não é instantânea provoca uma desvalorização do preço real. Efeito semelhante no preço da energia, porém com uma resposta bem mais acentuada que o preço dos grãos. Já a taxa de juros só tem impacto no preço da energia. A FRI da taxa de câmbio afeta significativamente o preço da energia, e uma queda leve de curto prazo no preço dos grãos.
+
+\ É possível notar, que praticamente os preços dos grãos não respondem ao choque de nenhuma variável e sim, o preço da energia é a variável mais sensível aos choques, só não sendo afetada pelo preço dos grãos.
+                                 
+\begin{figure}[H]
+	\caption{Função de Impulso Resposta}
+	\includegraphics[scale=0.8]{Rplot11.png}
+	\includegraphics[scale=0.8]{Rplot12.png}
+	\includegraphics[scale=0.8]{Rplot13.png}
+   
+	\label{fri}
+\end{figure}   
+\begin{figure}[H]
+	\caption{Função de Impulso Resposta 2}
+	
+	\includegraphics[scale=0.8]{Rplot14.png}
+	\includegraphics[scale=0.8]{Rplot15.png}
+	\label{fri2}
+\end{figure} 
+\subsection{Decomposição da Variância}
+
+\label{decovari}
+
+\ A análise da decomposição da variância para o preço real dos grãos do
+Brasil está apresentada na tabela \ref{decov}. ,
+\begin{table}[H]
+	\caption{Análise da Decomposição da Variância }
+	\label{decov}
+	\begin{center}
+		\begin{tabular}{llllll}
+			\hline
+			&graos &    energia &    cambio & juros&     inflacao \\
+			\hline
+			1 &1.0000000& 0.000000000 & 0.00000000& 0.000000000& 0.0000000000\\
+			2 &0.9877326 &0.001313366& 0.01007931& 0.000351008 &0.0005237458\\
+			3 &0.9803719 &0.002384708 &0.01494629& 0.001146950 &0.0011501788\\
+			4 &0.9775887 &0.002945370& 0.01591059& 0.002031880 &0.0015234075\\
+			5 &0.9764772& 0.003177612 &0.01594170& 0.002733434 &0.0016700667\\
+			6 &0.9758958& 0.003258324& 0.01594916& 0.003186383 &0.0017103522\\
+			7 &0.9755603& 0.003282283& 0.01599972& 0.003440435 &0.0017173059\\
+			8 &0.9753778& 0.003288316& 0.01604738& 0.003568929& 0.0017175429\\
+			9 &0.9752876 &0.003289546& 0.01607645& 0.003629001 &0.0017173831\\
+			10 &0.9752466 &0.003289713& 0.01609072& 0.003655440 &0.0017174870\\
+			
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+ 
+\section{Conclusões}
+\label{conc}
+
+\ Essa pesquisa, através de um modelo VAR padrão procurou analisar o comportamento do preços dos grãos no Brasil a partir da relação entre as principais variáveis macroeconômicas que impactam a agricultura, taxa de juros real, taxa de câmbio real, preço da energia e taxa de inflação. A partir dos dados não terem sidos satisfatório ao ser comparado a teoria econômica e alguns trabalhos empíricos destacados na seção (\ref{lit}), salvo o teste de causalidade, no sentindo Granger, ter apresentado causalidade da taxa de juros e da taxa de inflação nos preços dos grãos\footnote{Reconhecendo a fragilidade do teste na presença de quebras estruturais}, faz-se necessário fazer algumas observações antes tirar qualquer previsão precipitada. 
+
+\ Desse modo, foi realizado testes nos resíduos para verificar se existe autocorrelação serial, se são normais e se são homocedástico. Foi constatado que o os resíduos apresentam autocorrelação e não são normalmente distribuídos, acarretando um modelo espúrio,  que pode ser resultado de uma má especificação do modelo, se tratando de uma omissão de uma variável significativa. Uma hipótese que pode ser levado em consideração é o fato que ao trabalhar com \textit{commodities}, essas são mais impactadas a choques variáveis que determinam o mercado mundial. Modelos a serem desenvolvidos em trabalhos posteriores podem testar a significância de outras variáveis, visto a imensa relevância de entender os fatores que determinam os preços dos grãos.   
+
+\ O fato do modelo ter se caracterizado como espúrio, de forma alguma, torna essa pesquisa irrelevante. O intuito foi partir de um modelo mais simples, pois só assim podemos desenvolver modelos mais complexos. Outra hipótese a ser considerada, e acredito ser mais relevante, é a de que o modelo VAR padrão não consegue captar os desvios devido as quebras estruturais. Assim, para um estudo posterior, recomenda-se utilizar um modelo capturando os desvios pela média, a exemplo do SM-NVAR, desenvolvido no capítulo 5 e 6 por Enders e Holt(2012) e apresentado os resultados no capítulo 7.
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{rlllllllll1}
+			\begin{center}
+				
+		\end{center}}
+		\hline
+		Ano & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & 2016 \\ 
+		\hline
+		Agrícola & 3716743989.72 & 3716743989.72 & 3716743989.72 & 3716743989.72 & 3716743989.72 & 3716743989.72 & 3716743989.72 & 3716743989.72 & 3716743989.72 & 3716743989.72 \\ 
+		Industrial & 3044380340.65 & 3044380340.65 & 3044380340.65 & 3044380340.65 & 3044380340.65 & 3044380340.65 & 3044380340.65 & 3044380340.65 & 3044380340.65 & 3044380340.65 \\ 
+		Serviços & 12441426156.56 & 12441426156.56 & 12441426156.56 & 12441426156.56 & 12441426156.56 & 12441426156.56 & 12441426156.56 & 12441426156.56 & 12441426156.56 & 12441426156.56 \\ 
+		Demais & 5539651691.18 & 5539651691.18 & 5539651691.18 & 5539651691.18 & 5539651691.18 & 5539651691.18 & 5539651691.18 & 5539651691.18 & 5539651691.18 & 5539651691.18 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+
+\section*{\begin{thebibliography}}
+
+\item{CHAND, R. The global food
+	crisis: causes, severity and
+	outlook. Review Agriculture,
+	p. 115-122, jun. 2008.}
+\item{BAFFES, J. Oil spills on other
+	commodities. Resources Policy,
+	p. 126-34, 2007.}	
+\item{Enders, W. Applied Econometric Times Series. Wiley Series in Probability and Statistics. Wiley,
+2014.}
+\item{Enders, W.; Holt, M.,"The Evolving Relationships Between Agricultural and Energy Commodity Prices: A Shifting-Mean Vector Autoregressive Analysis"}
+\item{GUJARATI, D. Basic econometrics. McGraw Hill, 2003. (Economic series).}
+\item{
+	
+	Hamilton, James D.,"Commodity Inflation," Econbrowser: Analysis of Current Economic Conditions and Policy November 10, 2010.}
+\item{MARGARIDO, M. A.; BUENO, C.
+	R. F.; TUROLLA, F. A. Análise
+	da transmissão de prelos e das
+	volatibilidades nos mercados
+	internacionais de petróleo e
+	soja.}
+			
+\end{document}
